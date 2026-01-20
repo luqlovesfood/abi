@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday, Abi! 🎉</title>
+
+  <!-- Google Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Great+Vibes&display=swap">
+
+  <!-- Icons (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root{
+      --bg-1:#0f0c29;
+      --bg-2:#302b63;
+      --bg-3:#24243e;
+      --accent:#ff6fb5;
+      --accent-2:#ffd166;
+      --text:#ffffff;
+      --muted:#d9d9e3;
+      --card:#1d1b3a;
+      --card-2:#221f44;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius:18px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+      background-size: 200% 200%;
+      animation: bgShift 18s ease infinite;
+      overflow-x:hidden;
+    }
+    @keyframes bgShift {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    /* Floating balloons */
+    .balloon{
+      position:fixed;
+      bottom:-120px;
+      width:60px;height:80px;border-radius:50% 50% 45% 55%/55% 55% 45% 45%;
+      opacity:.7;filter:saturate(115%);
+      animation: floatUp linear infinite;
+      box-shadow: inset -6px -10px 18px rgba(0,0,0,.25);
+    }
+    .balloon:after{
+      content:'';
+      position:absolute;left:50%;top:74%;
+      width:2px;height:120px;background:rgba(255,255,255,.35);
+    }
+    @keyframes floatUp{
+      0%{transform:translateY(0) translateX(0) rotate(0deg)}
+      100%{transform:translateY(-120vh) translateX(10px) rotate(6deg)}
+    }
+
+    header{
+      text-align:center;
+      padding:9rem 1.5rem 4rem;
+      position:relative;
+    }
+    .title{
+      font-family:'Great Vibes', cursive;
+      font-size: clamp(40px, 8vw, 110px);
+      line-height: .95;
+      margin:0;
+      text-shadow: 0 6px 24px rgba(0,0,0,.4);
+      background: linear-gradient(90deg, #ff8bd6, #ffe28a, #89f7fe);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .subtitle{
+      margin:.8rem auto 0;
+      font-weight:300;
+      font-size: clamp(16px, 2.4vw, 24px);
+      color:var(--muted);
+      max-width:900px;
+    }
+    .typewriter{
+      display:inline-block;
+      border-right:2px solid var(--accent);
+      white-space:nowrap;
+      overflow:hidden;
+    }
+
+    .cta-bar{
+      margin-top:1.8rem;
+      display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;
+    }
+    .btn{
+      background:linear-gradient(135deg, #ff6fb5, #ffa6c9);
+      color:#1d0f1a;border:none;padding:.9rem 1.2rem;border-radius:999px;
+      font-weight:700;cursor:pointer;
+      box-shadow: var(--shadow);
+      transition: transform .15s ease, box-shadow .15s ease, filter .2s ease;
+    }
+    .btn:hover{transform: translateY(-2px); filter:saturate(115%)}
+    .btn.secondary{
+      background: linear-gradient(135deg, #7ae0ff, #b5f0ff);
+      color:#0b1d29;
+    }
+
+    main{
+      max-width:1100px;margin:0 auto;padding: 0 1.2rem 4rem;
+    }
+
+    .card{
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(255,255,255,.06), transparent 60%),
+                  radial-gradient(1000px 600px at 110% 10%, rgba(255,255,255,.04), transparent 60%),
+                  linear-gradient(180deg, var(--card), var(--card-2));
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      padding:1.2rem;
+      box-shadow: var(--shadow);
+      margin-top:2rem;
+    }
+
+    .section-title{
+      font-weight:800;
+      letter-spacing:.6px;
+      margin: .6rem 0 1rem;
+      display:flex;align-items:center;gap:.6rem;
+    }
+    .section-title i{color:var(--accent)}
+
+    /* Gallery grid */
+    .gallery{
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px,1fr));
+      gap:12px;
+    }
+    .gallery figure{
+      margin:0;position:relative;overflow:hidden;border-radius:16px;
+      aspect-ratio: 1/1; background:#15132a;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    .gallery img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      transition: transform .6s ease, filter .3s ease;
+      filter: saturate(108%) contrast(102%);
+    }
+    .gallery figure:hover img{transform: scale(1.06); filter: saturate(120%)}
+
+    .message{
+      font-size:1.05rem;line-height:1.9;color:#f2f2f8;
+      padding: .4rem .8rem 1rem;
+      white-space:pre-wrap;
+    }
+    .signature{
+      font-family:'Great Vibes', cursive;
+      font-size:2rem;color:var(--accent-2);margin-top:.6rem;
+      text-align:right;
+    }
+
+    /* Music control */
+    .music-control{
+      display:flex;align-items:center;gap:.6rem;justify-content:center;
+      color:var(--muted);font-size:.95rem;margin-top:.8rem;
+    }
+    .icon-btn{
+      width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      display:grid;place-items:center;cursor:pointer;transition: transform .15s ease, background .2s ease;
+    }
+    .icon-btn:hover{transform: translateY(-2px); background: rgba(255,255,255,.12)}
+
+    /* Footer */
+    footer{
+      text-align:center;color: #cfd2ff8c;margin-top:2rem;font-size:.9rem;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width:560px){
+      header{padding:6.5rem .9rem 2.8rem}
+      .subtitle{font-size: 15px}
+    }
+
+    /* Reduce motion preference */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important; transition:none !important;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative floating balloons -->
+  <div class="balloon" style="left:6%; animation-duration: 16s; background:#ff6fb5;"></div>
+  <div class="balloon" style="left:18%; animation-duration: 20s; background:#89f7fe;"></div>
+  <div class="balloon" style="left:30%; animation-duration: 17s; background:#ffe28a;"></div>
+  <div class="balloon" style="left:60%; animation-duration: 21s; background:#b28dff;"></div>
+  <div class="balloon" style="left:75%; animation-duration: 18s; background:#7ee787;"></div>
+
+  <header>
+    <h1 class="title">Happy Birthday, Abi!</h1>
+    <p class="subtitle">
+      <span id="typewriter" class="typewriter"></span>
+    </p>
+    <div class="cta-bar">
+      <button id="confettiBtn" class="btn"><i class="fa-solid fa-wand-magic-sparkles"></i> Celebrate!</button>
+      <button id="scrollGallery" class="btn secondary"><i class="fa-solid fa-images"></i> Open Gallery</button>
+      <button id="scrollLetter" class="btn secondary"><i class="fa-solid fa-heart"></i> Read My Letter</button>
+    </div>
+    <div class="music-control">
+      <button id="toggleMusic" class="icon-btn" aria-label="Play/Pause music"><i id="musicIcon" class="fa-solid fa-play"></i></button>
+      <span id="songTitle">Playing: “You Are The Reason”</span>
+    </div>
+    <audio id="bgm" preload="auto"></audio>
+  </header>
+
+  <main>
+    <!-- Photo Gallery -->
+    <section id="gallery" class="card">
+      <h2 class="section-title"><i class="fa-solid fa-images"></i> Our Moments</h2>
+      <div class="gallery" id="galleryGrid" aria-live="polite"></div>
+    </section>
+
+    <!-- Love Letter -->
+    <section id="letter" class="card">
+      <h2 class="section-title"><i class="fa-solid fa-heart"></i> A Letter To You</h2>
+      <div class="message" id="loveLetter"></div>
+      <div class="signature"></div>
+    </section>
+
+    <footer>
+      Made with a lot of love by Luqman Hakim Md Isa. Tap “Celebrate!” anytime for more confetti. 🎉
+    </footer>
+  </main>
+
+  <script>
+    // ===== CONFIG =====
+    const boyfriendName = "Abi";
+    const yourName = "Luqman Hakim Md Isa";
+    const musicUrl = "https://files.freemusicarchive.org/storage-freemusicarchive-org/music/no_curator/Scott_Holmes_Music/Happy_Music/Scott_Holmes_Music_-_Happy_Happy_Game_Show.mp3";
+
+    const galleryImages = [
+      "img_5802.jpg",
+      "img_4317.jpg",
+      "img_4406.jpg",
+      "img_4445.jpg"
+    ];
+
+    const typeLines = [
+      `To my favorite person, ${boyfriendName} ✨`,
+      "May your year be soft, bright, and full of wins.",
+      "Let’s make memories you’ll never forget 💫"
+    ];
+
+    // ===== TYPEWRITER =====
+    const twEl = document.getElementById('typewriter');
+    let lineIdx = 0, charIdx = 0, deleting = false;
+
+    function typeLoop(){
+      const current = typeLines[lineIdx];
+      if(!deleting){
+        twEl.textContent = current.slice(0, ++charIdx);
+        if(charIdx === current.length){
+          deleting = true;
+          setTimeout(typeLoop, 1600);
+          return;
+        }
+      }else{
+        twEl.textContent = current.slice(0, --charIdx);
+        if(charIdx === 0){
+          deleting = false;
+          lineIdx = (lineIdx + 1) % typeLines.length;
+        }
+      }
+      setTimeout(typeLoop, deleting ? 30 : 45);
+    }
+    typeLoop();
+
+    // ===== GALLERY =====
+    const grid = document.getElementById('galleryGrid');
+    function renderGallery(){
+      grid.innerHTML = "";
+      galleryImages.forEach(url=>{
+        const fig = document.createElement('figure');
+        const img = document.createElement('img');
+        img.loading = "lazy";
+        img.alt = "Our moment";
+        img.src = url;
+        img.onerror = () => img.remove();
+        fig.appendChild(img);
+        grid.appendChild(fig);
+      });
+    }
+    renderGallery();
+
+    // ===== CONFETTI =====
+    const confettiBtn = document.getElementById('confettiBtn');
+    function burst(){
+      const end = Date.now() + 800;
+      const colors = ['#ff6fb5', '#ffd166', '#7ee787', '#89f7fe', '#b28dff'];
+      (function frame(){
+        confetti({
+          particleCount: 4,
+          spread: 70,
+          startVelocity: 45,
+          gravity: 0.7,
+          ticks: 200,
+          colors
+        });
+        if(Date.now() < end){ requestAnimationFrame(frame); }
+      })();
+    }
+    confettiBtn.addEventListener('click', burst);
+    window.addEventListener('load', ()=> setTimeout(burst, 900));
+
+    // ===== SCROLL BUTTONS =====
+    document.getElementById('scrollGallery').addEventListener('click', ()=> {
+      document.getElementById('gallery').scrollIntoView({behavior:'smooth', block:'start'});
+      setTimeout(burst, 300);
+    });
+    document.getElementById('scrollLetter').addEventListener('click', ()=> {
+      document.getElementById('letter').scrollIntoView({behavior:'smooth', block:'start'});
+      setTimeout(burst, 300);
+    });
+
+    // ===== MUSIC =====
+    const audio = document.getElementById('bgm');
+    const toggleMusic = document.getElementById('toggleMusic');
+    const musicIcon = document.getElementById('musicIcon');
+    audio.src = musicUrl;
+
+    toggleMusic.addEventListener('click', async ()=> {
+      try {
+        if(audio.paused){
+          await audio.play();
+          musicIcon.className = "fa-solid fa-pause";
+        } else {
+          audio.pause();
+          musicIcon.className = "fa-solid fa-play";
+        }
+      } catch(e){
+        console.warn("Autoplay blocked:", e);
+      }
+    });
+
+    // ===== PERSONALIZE TEXT =====
+    document.title = `Happy Birthday, ${boyfriendName}! 🎉`;
+    document.querySelector('.title').textContent = `Happy Birthday, ${boyfriendName}!`;
+    document.querySelector('.signature').innerHTML = `— ${yourName} 💛`;
+    document.getElementById('loveLetter').innerHTML =
+`Dear ${boyfriendName},
+
+Every day with you feels like a small miracle—a reminder that love can be gentle, warm, and fun all at once. 
+Thank you for your patience, your laughter, and the way you make even ordinary moments glow.
+
+On your special day, I wish you joy that lingers, dreams that grow bigger, and a year that treats you kindly.
+I’m proud of who you are and even more excited for everything we’ll become—together.
+
+Forever your cheerleader,`;
+  </script>
+</body>
+</html>
