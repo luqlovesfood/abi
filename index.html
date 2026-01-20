@@ -245,9 +245,9 @@
 
     const galleryImages = [
        "IMG_5802.jpg",
-        "IMG_4317.jpg",
-        "IMG_4406.jpg",
-        "IMG_4445.jpg"
+       "IMG_4317.jpg",
+       "IMG_4406.jpg",
+       "IMG_4445.jpg"
     ];
 
     const typeLines = [
@@ -333,6 +333,21 @@
     const musicIcon = document.getElementById('musicIcon');
     audio.src = musicUrl;
 
+    // AUTOPLAY ON FIRST TAP/CLICK (iOS Safari compliant)
+    let audioStarted = false;
+    function startAudio() {
+      if(audioStarted) return;
+      audioStarted = true;
+      audio.play().then(()=>{
+        musicIcon.className = "fa-solid fa-pause";
+      }).catch(e=>{
+        console.warn("Autoplay blocked:", e);
+      });
+    }
+    document.body.addEventListener('click', startAudio, { once: true });
+    document.body.addEventListener('touchstart', startAudio, { once: true });
+
+    // TOGGLE MUSIC BUTTON
     toggleMusic.addEventListener('click', async ()=> {
       try {
         if(audio.paused){
